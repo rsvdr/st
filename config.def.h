@@ -6,6 +6,11 @@
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
 static char *font = "DejaVu Sans Mono:pixelsize=15:antialias=true:autohint=true";
+/* Spare fonts */
+static char *font2[] = { "Noto Color Emoji:pixelsize=15:antialias=true:autohint=true",
+    "DejaVuSansMono Nerd Font Mono:pixelsize=15:antialias=true:autohint=true",
+    "Noto Sans CJK JP:pixelsize=15:antialias=true:autohint=true"
+};
 static int borderpx = 3;
 
 /*
@@ -205,8 +210,6 @@ static Shortcut shortcuts[] = {
 	{ TERMMOD,              XK_Prior,       zoom,           {.f = +1} },
 	{ TERMMOD,              XK_Next,        zoom,           {.f = -1} },
 	{ TERMMOD,              XK_Home,        zoomreset,      {.f =  0} },
-	/* { TERMMOD,              XK_Up,          zoom,           {.f = +1} }, */
-	/* { TERMMOD,              XK_Down,        zoom,           {.f = -1} }, */
 	{ Mod1Mask,             XK_C,           clipcopy,       {.i =  0} },
 	{ Mod1Mask|ControlMask, XK_v,           clippaste,      {.i =  0} },
 	{ Mod1Mask,             XK_v,           selpaste,       {.i =  0} },
