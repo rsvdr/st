@@ -5,11 +5,11 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "DejaVu Sans Mono:pixelsize=15:antialias=true:autohint=true";
+static char *font = "DejaVu Sans Mono:pixelsize=22:antialias=true:autohint=true";
 /* Spare fonts */
-static char *font2[] = { "Noto Color Emoji:pixelsize=15:antialias=true:autohint=true",
-    "DejaVuSansMono Nerd Font Mono:pixelsize=15:antialias=true:autohint=true",
-    "Noto Sans CJK JP:pixelsize=15:antialias=true:autohint=true"
+static char *font2[] = { "Noto Color Emoji:pixelsize=22:antialias=true:autohint=true",
+    "DejaVuSansMono Nerd Font Mono:pixelsize=22:antialias=true:autohint=true",
+    "Noto Sans CJK JP:pixelsize=22:antialias=true:autohint=true"
 };
 static int borderpx = 3;
 
@@ -79,6 +79,18 @@ static unsigned int blinktimeout = 800;
 static unsigned int cursorthickness = 2;
 
 /*
+ * 1: render most of the lines/blocks characters without using the font for
+ *    perfect alignment between cells (U2500 - U259F except dashes/diagonals).
+ *    Bold affects lines thickness if boxdraw_bold is not 0. Italic is ignored.
+ * 0: disable (render all U25XX glyphs normally from the font).
+ */
+const int boxdraw = 1;
+const int boxdraw_bold = 0;
+
+/* braille (U28XX):  1: render as adjacent "pixels",  0: use font */
+const int boxdraw_braille = 0;
+
+/*
  * bell volume. It must be a value between -100 and 100. Use 0 for disabling
  * it
  */
@@ -117,7 +129,8 @@ static const char *colorname[] = {
 	"#a1a1a1",
 
 	/* 8 bright colors */
-    "#313131",
+    /* "#313131", */
+    "#999999",
     "#df6c6c",
     "#b6dcb6",
     "#e6b16d",
@@ -210,14 +223,16 @@ static Shortcut shortcuts[] = {
 	{ TERMMOD,              XK_Prior,       zoom,           {.f = +1} },
 	{ TERMMOD,              XK_Next,        zoom,           {.f = -1} },
 	{ TERMMOD,              XK_Home,        zoomreset,      {.f =  0} },
-	{ Mod1Mask,             XK_C,           clipcopy,       {.i =  0} },
-	{ Mod1Mask|ControlMask, XK_v,           clippaste,      {.i =  0} },
-	{ Mod1Mask,             XK_v,           selpaste,       {.i =  0} },
+	{ Mod1Mask|ControlMask,             XK_c,           clipcopy,       {.i =  0} },
+	{ Mod1Mask|ControlMask,             XK_v,           clippaste,      {.i =  0} },
+	{ Mod1Mask,             XK_v,           selpaste,      {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
 	{ Mod1Mask,             XK_Page_Up,      kscrollup,     {.i = -1} },
 	{ Mod1Mask,             XK_Page_Down,    kscrolldown,   {.i = -1} },
 	{ Mod1Mask,             XK_k,            kscrollup,     {.i = 1} },
 	{ Mod1Mask,             XK_j,            kscrolldown,   {.i = 1} },
+	{ Mod1Mask,             XK_Up,           kscrollup,     {.i = 1} },
+	{ Mod1Mask,             XK_Down,         kscrolldown,   {.i = 1} },
 };
 
 /*

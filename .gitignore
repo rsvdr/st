@@ -2,5 +2,6 @@
 *.rej
 *.bak
 *.o
+*.c
 config.h
 st
